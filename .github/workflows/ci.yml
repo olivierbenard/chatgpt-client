@@ -28,7 +28,7 @@ jobs:
       # Install project dependencies including mypy (if configured as an extra)
       - name: Install dependencies
         run: |
-          poetry install --no-interaction --no-root
+          poetry install --no-interaction
 
       # Check code formatting with Black
       - name: Check code formatting (Black)
