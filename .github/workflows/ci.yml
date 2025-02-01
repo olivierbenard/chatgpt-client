@@ -36,7 +36,7 @@ jobs:
 
       # Run static type checking with mypy
       - name: Run mypy
-        run: poetry run mypy --install-types chatgpt_client/
+        run: poetry run mypy --install-types --non-interactive chatgpt_client/
 
       # Run linting with pylint (suppress missing-module-docstring warning if desired)
       - name: Run pylint
