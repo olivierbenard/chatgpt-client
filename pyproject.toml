@@ -5,7 +5,7 @@ description = "Client for ChatGPT."
 authors = ["Olivier Bénard"]
 license = "MIT"
 readme = "README.md"
-packages = [ {include = "chatgpt_client"} ]
+packages = [ {include = "chatgpt_client", from = "chatgpt_client"} ]
 
 [tool.poetry.dependencies]
 python = "^3.12"
