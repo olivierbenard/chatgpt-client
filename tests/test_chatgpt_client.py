@@ -4,7 +4,10 @@ Test module.
 
 from unittest.mock import patch, MagicMock
 import pytest
-from chatgpt_client.client import ChatGPTClient, ChatGPTConfig
+from chatgpt_client.client import (
+    ChatGPTClient,
+    ChatGPTConfig,
+)
 
 
 @pytest.fixture
