@@ -29,7 +29,7 @@ jobs:
       - name: Install dependencies
         run: |
           poetry install --no-interaction --no-root
-          poetry run mypy --install-types --no-interaction
+          poetry run mypy --no-interaction --install-types
 
       # Check code formatting with Black
       - name: Check code formatting (Black)
