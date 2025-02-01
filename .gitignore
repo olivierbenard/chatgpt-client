@@ -1,6 +1,8 @@
 # Ignore Python cache and virtual environments
 __pycache__/
 .mypy_cache/
+.coverage
+
 *.py[cod]
 *.sqlite3
 

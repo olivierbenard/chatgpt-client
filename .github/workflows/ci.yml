@@ -45,3 +45,7 @@ jobs:
       # Run tests with pytest
       - name: Run tests
         run: poetry run pytest
+
+      # Run test coverage with pytest
+      - name: Run tests coverage
+        run: poetry run pytest --cov=chatgpt_client --cov-branch --cov-report=term-missing --cov-fail-under=90

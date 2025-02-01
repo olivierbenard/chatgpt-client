@@ -82,8 +82,7 @@ class ChatGPTClient:
 
 if __name__ == "__main__":
 
-    client = ChatGPTClient()
-
-    MESSAGE = "Hello World!"
-    response = client.send_message(message=MESSAGE)
-    print(response)
+    client = ChatGPTClient()  # pragma: no cover
+    MESSAGE = "Hello World!"  # pragma: no cover
+    response = client.send_message(message=MESSAGE)  # pragma: no cover
+    print(response)  # pragma: no cover
