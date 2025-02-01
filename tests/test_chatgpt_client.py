@@ -1,15 +1,25 @@
-import pytest
+"""
+Test module.
+"""
+
 from unittest.mock import patch, MagicMock
+import pytest
 from chatgpt_client.client import ChatGPTClient, ChatGPTConfig
 
 
 @pytest.fixture
 def mock_config():
+    """
+    Fixture instancing a ChatGPTConfig object.
+    """
     return ChatGPTConfig(api_key="test_api_key")
 
 
 @pytest.fixture
 def chatgpt_client(mock_config):
+    """
+    Fixture instancing a ChatGPTClient object.
+    """
     return ChatGPTClient(config=mock_config)
 
 

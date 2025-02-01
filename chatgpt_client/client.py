@@ -1,7 +1,11 @@
+"""
+Main module.
+"""
+
 import os
-import requests
 import json
 from dataclasses import dataclass
+import requests
 from dotenv import load_dotenv
 
 from chatgpt_client.config import (
@@ -13,6 +17,11 @@ load_dotenv()
 
 @dataclass
 class ChatGPTConfig:
+    """
+    Class defining the configuration for the
+    ChatGPT Client.
+    """
+
     api_key: str = os.getenv("OPENAI_API_KEY", "")
     model: str = "gpt-4o-mini"
     temperature: float = 0.7
@@ -24,13 +33,13 @@ class ChatGPTClient:
     A simple ChatGPT client to interact with OpenAI's GPT API.
     """
 
-    def __init__(self, config: ChatGPTConfig = None) -> None:
+    def __init__(self, config: ChatGPTConfig | None = None) -> None:
         """
         Initialize the ChatGPT client.
         :param config: ChatGPTConfig object containing API key, model, and temperature.
         """
         self.config = config or ChatGPTConfig()
-        self.history = []  # Store conversation history
+        self.history: list[dict[str, str]] = []  # Store conversation history
 
     def send_message(self, message: str) -> str:
         """
@@ -50,19 +59,19 @@ class ChatGPTClient:
             "temperature": self.config.temperature,
         }
 
-        response = requests.post(
+        _response = requests.post(
             url=self.config.api_url,
             headers=headers,
             data=json.dumps(payload),
             timeout=TIMEOUT,
         )
 
-        if response.status_code == 200:
-            reply = response.json()["choices"][0]["message"]["content"]
+        if _response.status_code == 200:
+            reply = _response.json()["choices"][0]["message"]["content"]
             self.history.append({"role": "assistant", "content": reply})
             return reply
-        else:
-            return f"Error: {response.status_code} - {response.text}"
+
+        return f"Error: {_response.status_code} - {_response.text}"
 
     def clear_history(self):
         """
@@ -73,9 +82,8 @@ class ChatGPTClient:
 
 if __name__ == "__main__":
 
-    config = ChatGPTConfig()
     client = ChatGPTClient()
 
-    message = "Hello World!"
-    response = client.send_message(message)
+    MESSAGE = "Hello World!"
+    response = client.send_message(message=MESSAGE)
     print(response)

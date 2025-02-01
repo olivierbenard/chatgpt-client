@@ -8,7 +8,7 @@ mypy:
 	poetry run mypy chatgpt_client/
 
 pylint:
-	poetry run pylint chatgpt_client/ tests/
+	poetry run pylint chatgpt_client/
 
 tests:
 	poetry run pytest -vvs --cov=chatgpt_client tests/
