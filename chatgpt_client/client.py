@@ -5,6 +5,7 @@ Main module.
 import os
 import json
 from dataclasses import dataclass
+from typing import Optional
 import requests
 from dotenv import load_dotenv
 
@@ -41,7 +42,7 @@ class ChatGPTClient:
         self.config = config or ChatGPTConfig()
         self.history: list[dict[str, str]] = []  # Store conversation history
 
-    def send_message(self, message: str) -> str:
+    def send_message(self, message: str) -> Optional[str]:
         """
         Send a message to ChatGPT and get a response.
         :param message: User input message.
@@ -59,19 +60,31 @@ class ChatGPTClient:
             "temperature": self.config.temperature,
         }
 
-        _response = requests.post(
-            url=self.config.api_url,
-            headers=headers,
-            data=json.dumps(payload),
-            timeout=TIMEOUT,
-        )
+        try:
 
-        if _response.status_code == 200:
+            _response = requests.post(
+                url=self.config.api_url,
+                headers=headers,
+                data=json.dumps(payload),
+                timeout=TIMEOUT,
+            )
+
+            _response.raise_for_status()
+
             reply = _response.json()["choices"][0]["message"]["content"]
             self.history.append({"role": "assistant", "content": reply})
             return reply
 
-        return f"Error: {_response.status_code} - {_response.text}"
+        except requests.exceptions.HTTPError as http_err:
+            print(f"HTTP error occurred: {http_err}")
+        except requests.exceptions.ConnectionError as conn_err:
+            print(f"Connection error occurred: {conn_err}")
+        except requests.exceptions.Timeout as timeout_err:
+            print(f"Timeout error occurred: {timeout_err}")
+        except requests.exceptions.RequestException as req_err:
+            print(f"An error occurred: {req_err}")
+
+        return None
 
     def clear_history(self):
         """
